@@ -6,8 +6,12 @@ This repository is in no way related with the work of the book's author.
 
 ## Summary
 
-### Chapter2 : Program Structure
+### Chapter 2 : Program Structure
 
 1. Looping Triangle
 2. Fizz Buzz
 3. Chess Board
+
+### Chapter 3 : Functions
+
+1. Minimum
