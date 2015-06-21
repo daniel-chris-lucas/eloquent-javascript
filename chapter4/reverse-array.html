@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reversing an array</title>
+</head>
+<body>
+    <h1>Reversing an array</h1>
+
+    <p>
+        Arrays have a method reverse, which changes the array by inverting the order in which its elements appear. <br>
+        For this exercise, write two functions, reverseArray and reverseArrayInPlace . The first, reverseArray , <br>
+        takes an array as argument and produces a new array that has the same elements in the inverse order. <br>
+        The second, reverseArrayInPlace , does what the reverse method does: it modifies the array given as argument <br>
+        in order to reverse its elements. Neither may use the standard reverse method.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        /**
+         * Reverse array and return new array that is reversed.
+         * 
+         * @param  {array} Array to reverse
+         * @return {array} Reversed array
+         */
+        function reverseArray(array) {
+            var result = [];
+
+            for (i = array.length - 1; i >= 0; i--) {
+                result.push(array[i]);
+            }
+
+            return result;
+        }
+
+        /**
+         * Reverse an array and overwrite the original array.
+         * 
+         * @param  {array} Array to reverse
+         * @return {Array} Reversed array.
+         */
+        function reverseArrayInPlace(array) {
+            for (var i = 0; i < Math.floor(array.length / 2); i++) {
+                var old = array[i];
+                array[i] = array[array.length - 1 - i];
+                array[array.length - 1 - i] = old;
+            }
+
+            return array;
+        }
+
+        var array1 = [1,2,3];
+        console.log('array1', array1);
+        console.log('reverse array1', reverseArray(array1));
+        console.log('array1', array1);
+
+        var array2 = [4,5,6];
+        console.log('array2', array2);
+        console.log('reverse array2', reverseArrayInPlace(array2));
+        console.log('array2', array2);
+    </script>
+</body>
+</html>

@@ -21,3 +21,5 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 4 : Data Structures - Objects and Arrays
 
 1. The sum of a range
+2. Reversing an array
+3. A list

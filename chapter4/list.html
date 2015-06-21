@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A list</title>
+</head>
+<body>
+    <h1>A list</h1>
+
+    <p>
+        Write a function arrayToList that builds up a data structure like the previous one when given [1, 2, 3] <br>
+        as argument, and write a listToArray function that produces an array from a list. Also write the helper <br>
+        functions prepend , which takes an element and a list and creates a new list that adds the element <br>
+        to the front of the input list, and nth , which takes a list and a number and returns the element at <br>
+        the given position in the list, or undefined when there is no such element.<br>
+        If you haven’t already, also write a recursive version of nth .
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        /**
+         * Convert an array to a list.
+         * 
+         * @param  {array} The array to be converted.
+         * @return {list} The resulting list.
+         */
+        function arrayToList (array) {
+            var list = null;
+
+            for (var i = array.length -1; i >= 0; i--) {
+                list = {value: array[i], rest: list};
+            }
+
+            return list;
+        }
+
+        /**
+         * Convert a list to an array.
+         * 
+         * @param  {list} The list to be converted.
+         * @return {array} The resulting array.
+         */
+        function listToArray (list) {
+            var array = [];
+
+            for (currentNode = list; currentNode; currentNode = currentNode.rest) {
+                array.push(currentNode.value);
+            }
+
+            return array;
+        }
+
+        /**
+         * Add a new element to the beginning of a list.
+         * 
+         * @param  {integer} New element to be inserted.
+         * @param  {list} The list to insert the element into.
+         * @return {list} The list with the element inserted.
+         */
+        function prepend (element, list) {
+            return {value: element, rest: list};
+        }
+
+        /**
+         * Get the element at the nth position in a list.
+         * 
+         * @param  {list} The list to search in.
+         * @param  {index} The index of the element to search for.
+         * @return {integer} The element that is being searched.
+         */
+        function nth (list, index) {
+            if (! list) {
+                return undefined;
+            } else if (index == 0) {
+                return list.value;
+            }
+
+            return nth(list.rest, index - 1);
+        }
+
+        var array1 = [1,2,3],
+            list1  = arrayToList(array1),
+            array2 = listToArray(list1);
+
+        console.log('arrayToList 1,2,3', list1);
+        console.log('listToArray', array2);
+        list1 = prepend(5, list1);
+        console.log('prepend 5', list1);
+        console.log(nth(list1, 0));
+        console.log(nth(list1, 1));
+    </script>
+</body>
+</html>
