@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fizz Buzz</title>
+</head>
+<body>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var whiteSquare = "   ",
+            blackSquare = " # ",
+            chessBoard  = "";
+
+        for (var height = 0; height < 8; height++) {
+            var line = "";
+
+            for (var width = 0; width < 8; width++) {
+                line += ((height + width) % 2 === 0) ? whiteSquare : blackSquare;
+            }
+
+            chessBoard += line+"\n";
+        }
+
+        console.log(chessBoard);
+    </script>
+</body>
+</html>
