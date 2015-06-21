@@ -27,11 +27,18 @@
     <p>This exercise is logged into the developer tools console using console.log()</p>
 
     <script>
-        var countBs = function (word) {
+        /**
+         * Count number of occurences of a letter in a string.
+         * 
+         * @param  {string} The word to search in.
+         * @param  {string} The character to search for.
+         * @return {integer} The number of occurences of the character in the string.
+         */
+        var countChars = function (word, character) {
             var foundOccurrences = 0;
 
             for (var i = 0; i <= word.length; i++) {
-                if (word.charAt(i).toLowerCase() === 'b') {
+                if (word.charAt(i) === character) {
                     foundOccurrences++;
                 }
             }
@@ -39,7 +46,16 @@
             return foundOccurrences;
         };
 
-        console.log(countBs("beanbagbubble"));
+        /**
+         * Count the number of 'B' characters in a given string.
+         * @param  {string} The word to search in.
+         * @return {integer} The number of occurences of 'B' in the string.
+         */
+        var countBs = function (word) {
+            return countChars(word, 'B');
+        };
+
+        console.log(countBs("BeanBagBubble"));
     </script>
 </body>
 </html>
