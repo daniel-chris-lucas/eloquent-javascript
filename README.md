@@ -17,3 +17,7 @@ This repository is in no way related with the work of the book's author.
 1. Minimum
 2. Is Even
 3. Bean Counting
+
+### Chapter 4 : Data Structures - Objects and Arrays
+
+1. The sum of a range
