@@ -15,3 +15,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 3 : Functions
 
 1. Minimum
+2. Is Even

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Is Even</title>
+</head>
+<body>
+    <h1>Is Even</h1>
+
+    <p>
+        Define a recursive function isEven corresponding to this description. The function should accept 
+        a number parameter and return a Boolean.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var isEven = function (number) {
+            if (number === 0) {
+                return true;
+            } else if (number === 1) {
+                return false;
+            } else if (number < 0) {
+                return isEven(-number);
+            } else {
+                return isEven(number - 2);
+            }
+        };
+
+        console.log('50 is even?', isEven(50));
+        console.log('75 is even?', isEven(75));
+        console.log('-1 is even?', isEven(-1));
+        console.log('-2 is even?', isEven(-2));
+    </script>
+</body>
+</html>
