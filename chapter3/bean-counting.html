@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bean Counting</title>
+</head>
+<body>
+    <h1>Bean Counting</h1>
+
+    <p>
+        You can get the Nth character, or letter, from a string by writing "string".charAt(N),<br>
+        similar to how you get its length with "s".length . The returned value will be a string <br>
+        containing only one character (for example, "b"). The first character has position zero, <br>
+        which causes the last one to be found at position string.length - 1 . In other words, <br>
+        a two-character string has length 2, and its characters have positions 0 and 1.
+    </p>
+    <p>
+        Write a function countBs that takes a string as its only argument and returns a number <br>
+        that indicates how many uppercase “B” characters are in the string.
+    </p>
+    <p>
+        Next, write a function called countChar that behaves like countBs , except it takes a second <br>
+        argument that indicates the character that is to be counted (rather than counting only <br>
+        uppercase “B” characters). Rewrite countBs to make use of this new function.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var countBs = function (word) {
+            var foundOccurrences = 0;
+
+            for (var i = 0; i <= word.length; i++) {
+                if (word.charAt(i).toLowerCase() === 'b') {
+                    foundOccurrences++;
+                }
+            }
+
+            return foundOccurrences;
+        };
+
+        console.log(countBs("beanbagbubble"));
+    </script>
+</body>
+</html>
