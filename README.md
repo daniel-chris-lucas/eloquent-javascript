@@ -23,3 +23,4 @@ This repository is in no way related with the work of the book's author.
 1. The sum of a range
 2. Reversing an array
 3. A list
+4. Deep Comparison

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deep Comparison</title>
+</head>
+<body>
+    <h1>Deep Comparison</h1>
+
+    <p>
+        The == operator compares objects by identity. But sometimes, you would prefer to compare the values of <br>
+        their actual properties.
+    </p>
+    <p>
+        Write a function, deepEqual , that takes two values and returns true only if they are the same value or <br>
+        are objects with the same properties whose values are also equal when compared with a recursive call to <br>
+        deepEqual .
+    </p>
+    <p>
+        To find out whether to compare two things by identity (use the === operator for that) or by looking at <br>
+        their properties, you can use the typeof operator. If it produces "object" for both values, you should <br>
+        do a deep comparison.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        function deepEqual (value1, value2) {
+            var value1Props = 0;
+            var value2Props = 0;
+
+            if (value1 === value2) {
+                return true;
+            }
+
+            if (value1 == null || typeof value1 != "object" || value2 == null || typeof value2 != "object") {
+                return false;
+            }
+
+            for (prop in value1) {
+                value1Props++;
+            }
+
+            for (prop in value2) {
+                value2Props++;
+
+                if (! prop in value1 || ! deepEqual(value1[prop], value2[prop])) {
+                    return false;
+                }
+            }
+
+            return value1Props == value2Props;
+        }
+
+        console.log(deepEqual(1, 1));
+        console.log(deepEqual(
+            {name: "Daniel", age: 25}, 
+            {name: "Daniel", age: 25}
+        ));
+        console.log(deepEqual(
+            {name: "Daniel", age: 25},
+            {name: "Daniel", age: 26}
+        ));
+        console.log(deepEqual(
+            {name: "Daniel", age: 25}, 
+            {name: "Daniel", age: 25, lastName: "Lucas"}
+        ));
+        console.log(deepEqual(
+            {name: "Daniel", age: 25, address: {number: 62, street: "James Bond Street", city: "London"}}, 
+            {name: "Daniel", age: 25, address: {number: 62, street: "James Bond Street", city: "London"}}
+        ));
+    </script>
+</body>
+</html>
