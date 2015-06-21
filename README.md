@@ -1,6 +1,6 @@
 # Eloquent JavaScript
 
-This repository contains exercises from the [Eloquent JavaScript](http://eloquentjavascript.net/ Eloquent JavaScript) book.
+This repository contains exercises from the [Eloquent JavaScript](http://eloquentjavascript.net/) book.
 
 This repository is in no way related with the work of the book's author.
 
@@ -16,3 +16,4 @@ This repository is in no way related with the work of the book's author.
 
 1. Minimum
 2. Is Even
+3. Bean Counting
