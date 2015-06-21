@@ -10,19 +10,24 @@
     <script>
         var whiteSquare = "   ",
             blackSquare = " # ",
-            chessBoard  = "";
+            chessBoard  = "",
+            boardSize   = 8;
 
-        for (var height = 0; height < 8; height++) {
-            var line = "";
+        if (boardSize <= 50) {
+            for (var height = 0; height < boardSize; height++) {
+                var line = "";
 
-            for (var width = 0; width < 8; width++) {
-                line += ((height + width) % 2 === 0) ? whiteSquare : blackSquare;
+                for (var width = 0; width < boardSize; width++) {
+                    line += ((height + width) % 2 === 0) ? whiteSquare : blackSquare;
+                }
+
+                chessBoard += line + "\n";
             }
 
-            chessBoard += line+"\n";
+            console.log(chessBoard);
+        } else {
+            console.log("Board size must be smaller than or equal to 50");
         }
-
-        console.log(chessBoard);
     </script>
 </body>
 </html>
