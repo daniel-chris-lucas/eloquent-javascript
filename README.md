@@ -9,3 +9,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter2 : Program Structure
 
 1. Looping Triangle
+2. Fizz Buzz
