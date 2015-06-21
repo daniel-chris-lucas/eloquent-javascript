@@ -6,4 +6,6 @@ These are my personal solutions to the exercises and are in no way associated wi
 
 ## Summary
 
-Chapter2 : Program Structure
+### Chapter2 : Program Structure
+
+1. Looping Triangle
