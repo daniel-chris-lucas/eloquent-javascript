@@ -36,3 +36,4 @@ This repository is in no way related with the work of the book's author.
 
 1. A vector type
 2. Another cell
+3. Sequence interface
