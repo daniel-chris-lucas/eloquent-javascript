@@ -73,15 +73,30 @@
             return array.reduce(plus) / array.length;
         }
 
-        var byCentury = {};
-        ancestry.forEach(function (person) {
-            var groupName = Math.ceil(person.died / 100);
+        /**
+         * Group array by a value
+         * @param  {array} Array to be grouped
+         * @param  {function} Callback used for specifying how to group the elements.
+         * @return {object} Grouped set of the values.
+         */
+        function groupBy (array, groupOf) {
+            var groups = {};
 
-            if (groupName in byCentury) {
-                byCentury[groupName].push(person);
-            } else {
-                byCentury[groupName] = [person];
-            }
+            array.forEach(function (element) {
+                var groupName = groupOf(element);
+
+                if (groupName in groups) {
+                    groups[groupName].push(element);
+                } else {
+                    groups[groupName] = [element];
+                }
+            });
+
+            return groups;
+        }
+
+        var byCentury = groupBy(ancestry, function (person) {
+            return Math.ceil(person.died / 100);
         });
 
         for (century in byCentury) {
