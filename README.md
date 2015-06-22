@@ -31,3 +31,7 @@ This repository is in no way related with the work of the book's author.
 2. Mother-child age difference
 3. Historical life expectancy
 4. Every and then some
+
+### Chapter 6 : The Secret Life of Objects
+
+1. A vector type
