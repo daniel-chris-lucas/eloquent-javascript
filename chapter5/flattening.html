@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flattening</title>
+</head>
+<body>
+    <h1>Flattening</h1>
+
+    <p>
+        Use the reduce method in combination with the concat method to “flatten” an array of arrays into a single array that has all the elements of the input arrays.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var array = [[1,2],[3,4],[5,6]];
+        
+        /*
+        Reduce: Param 1: Callback (result, currentItem)
+        Concat: Cancatenate item1 with item2.
+         */
+        console.log(array.reduce(function (flatArray, item) {
+            return flatArray.concat(item);
+        }, []));
+    </script>
+</body>
+</html>
