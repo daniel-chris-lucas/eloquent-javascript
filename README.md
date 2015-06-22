@@ -35,3 +35,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 6 : The Secret Life of Objects
 
 1. A vector type
+2. Another cell
