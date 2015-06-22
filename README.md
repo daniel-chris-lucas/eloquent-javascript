@@ -24,3 +24,8 @@ This repository is in no way related with the work of the book's author.
 2. Reversing an array
 3. A list
 4. Deep Comparison
+
+### Chapter 5 : Higher Order Functions
+
+1. Flattening
+2. Mother-child age difference
