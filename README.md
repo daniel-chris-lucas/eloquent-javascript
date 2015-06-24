@@ -45,3 +45,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 8 : Bugs and Error Handling
 
 1. Retry
+2. The locked box
