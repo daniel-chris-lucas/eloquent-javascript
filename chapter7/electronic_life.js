@@ -395,6 +395,42 @@ SmartPlantEater.prototype.act = function (context) {
     return {type: "move", direction: this.direction};
 };
 
+function Tiger() {
+    this.energy = 100;
+    this.direction = "w";
+    // Used to track the amount of prey seen per turn in the last six turns
+    this.preySeen = [];
+}
+
+Tiger.prototype.act = function (context) {
+    // Average number of prey seen per turn
+    var seenPerTurn = this.preySeen.reduce(function (a, b) {
+        return a + b;
+    }, 0) / this.preySeenlength;
+
+    var prey = context.findAll("O");
+    this.preySeen.push(prey.length);
+    // Drop the first element from the array when it is longer than 6
+    if (this.preySeen.length > 6) {
+        this.preySeen.shift();
+    }
+
+    // Only eat if the predator saw more than 1/4 prey animal per turn
+    if (prey.length && seenPerTurn > 0.25) {
+        return {type: "eat", direction: randomElement(prey)};
+    }
+
+    var space = context.find(" ");
+    if (this.energy > 400 && space) {
+        return {type: "reproduce", direction: space};
+    }
+    if (context.look(this.direction) != " " && space) {
+        this.direction = space;
+    }
+
+    return {type: "move", direction: this.direction};
+};
+
 var valleyPlan = ["############################",
                    "#####                 ######",
                    "##   ***                **##",
@@ -410,6 +446,32 @@ var valleyPlan = ["############################",
 
 var valley = new LifeLikeWorld(valleyPlan, {
     "#": Wall,
+    "O": SmartPlantEater,
+    "*": Plant
+});
+
+var predatorPlan = ["####################################################",
+                    "#                 ####         ****              ###",
+                    "#   *  @  ##                 ########       OO    ##",
+                    "#   *    ##        O O                 ****       *#",
+                    "#       ##*                        ##########     *#",
+                    "#      ##***  *         ****                     **#",
+                    "#* **  #  *  ***      #########                  **#",
+                    "#* **  #      *               #   *              **#",
+                    "#     ##              #   O   #  ***          ######",
+                    "#*            @       #       #   *        O  #    #",
+                    "#*                    #  ######                 ** #",
+                    "###          ****          ***                  ** #",
+                    "#       O                        @         O       #",
+                    "#   *     ##  ##  ##  ##               ###      *  #",
+                    "#   **         #              *       #####  O     #",
+                    "##  **  O   O  #  #    ***  ***        ###      ** #",
+                    "###               #   *****                    ****#",
+                    "####################################################"];
+
+var jurassicWorld = new LifeLikeWorld(predatorPlan, {
+    "#": Wall,
+    "@": Tiger,
     "O": SmartPlantEater,
     "*": Plant
 });
