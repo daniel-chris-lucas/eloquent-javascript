@@ -41,3 +41,7 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 7 : Electronic Life
 
 1. Electronic life
+
+### Chapter 8 : Bugs and Error Handling
+
+1. Retry
