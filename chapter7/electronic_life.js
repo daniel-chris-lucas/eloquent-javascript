@@ -98,7 +98,7 @@ function randomElement (array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-var directionNames = "n ne e se s sw w nw";
+var directionNames = "n ne e se s sw w nw".split(" ");
 
 /**
  * Critter constructor.
