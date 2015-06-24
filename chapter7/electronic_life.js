@@ -245,8 +245,3 @@ View.prototype.find = function (char) {
 
     return randomElement(found);
 };
-
-for (var i = 0; i < 5; i++) {
-    world.turn();
-    console.log(world.toString());
-}
