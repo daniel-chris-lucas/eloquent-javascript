@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regexp golf</title>
+</head>
+<body>
+    <h1>Regexp golf</h1>
+
+    <p>
+        <i>Code golf</i> is a term used for the game of trying to express a particular program in as few <br>
+        characters as possible. Similarly, regexp golf is the practice of writing as tiny a regular expression <br>
+        as possible to match a given pattern, and only that pattern.
+    </p>
+    <p>
+        For each of the following items, write a regular expression to test whether any of the given substrings <br>
+        occur in a string. The regular expression should match only strings containing one of the substrings <br>
+        described. Do not worry about word boundaries unless explicitly mentioned. When your expression works, <br>
+        see whether you can make it any smaller.
+    </p>
+    <p>
+        <ol>
+            <li>car and cat</li>
+            <li>pop and prop</li>
+            <li>ferret, ferry, and ferrari</li>
+            <li>Any word ending in ious</li>
+            <li>A whitespace character followed by a dot, comma, colon, or semi- colon</li>
+            <li>A word longer than six letters</li>
+            <li>A word without the letter e</li>
+        </ol>
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        verify(/ca[rt]/,
+            ["my car", "bad cats"],
+            ["camper", "high arts"]
+        );
+
+        verify(/pr?op/,
+            ["pop culture", "mad props"],
+            ["plop"]
+        );
+
+        verify(/ferr(et|y|ari)/,
+            ["ferret", "ferry", "ferrari"],
+            ["ferrum", "transfer A"]
+        );
+
+        verify(/ious\b/,
+            ["how delicious", "spacious room"],
+            ["ruinous", "consciousness"]
+        );
+
+        verify(/\s[.,;:]/,
+            ["bad punctuation ."],
+            ["escape the dot"]
+        );
+
+        verify(/\w{7,}/,
+            ["hottentottententen"],
+            ["no", "hotten totten tenten"]
+        );
+
+        verify(/\b[a-df-z]+\b/i,
+            ["red platypus", "wobbling nest"],
+            ["earth bed", "learning ape"]
+        );
+
+        function verify (regexp, yes, no) {
+            if (regexp.source == '...') {
+                return;
+            }
+
+            yes.forEach(function (s) {
+                if (! regexp.test(s)) {
+                    console.log("Failure to match '" + s + "'");
+                }
+            });
+
+            no.forEach(function (s) {
+                if (regexp.test(s)) {
+                    console.log("Unexpected match for '" + s + "'");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
