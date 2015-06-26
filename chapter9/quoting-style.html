@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quoting style</title>
+</head>
+<body>
+    <h1>Quoting style</h1>
+
+    <p>
+        Imagine you have written a story and used single quotation marks through- out to mark pieces of <br>
+        dialogue. Now you want to replace all the dialogue quotes with double quotes, while keeping the <br>
+        single quotes used in contractions like aren’t.
+    </p>
+    <p>
+        Think of a pattern that distinguishes these two kinds of quote usage and craft a call to the replace <br>
+        method that does the proper replacement.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var text = "'I'm the cook', he said, 'it's my job'";
+
+        console.log(text.replace(/(^|\W)'|'(\W|$)/g, '$1"$2'));
+    </script>
+</body>
+</html>
