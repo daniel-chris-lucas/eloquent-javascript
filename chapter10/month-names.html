@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Month names</title>
+</head>
+<body>
+    <h1>Month names</h1>
+
+    <p>
+        Write a simple module similar to the weekDay module that can convert month numbers (zero-based, as <br>
+        in the Date type) to names and can con- vert names back to numbers. Give it its own namespace since <br>
+        it will need an internal array of month names, and use plain JavaScript, without any module loader system.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        var month = function () {
+            var names = [
+                "January", "February", "March", "April", "May",
+                "June", "July", "August", "September", "October",
+                "November", "December"
+            ];
+
+            return {
+                name: function (number) { return names[number]; },
+                number: function (name) { return names.indexOf(name); }
+            };
+        }();
+
+        console.log(month.name(2));
+        console.log(month.number("April"));
+    </script>
+</body>
+</html>

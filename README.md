@@ -52,3 +52,7 @@ This repository is in no way related with the work of the book's author.
 1. Regexp golf
 2. Quoting style
 3. Numbers again
+
+### Chapter 10 : Modules
+
+1. Month names
