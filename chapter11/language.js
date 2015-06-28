@@ -244,3 +244,21 @@ topEnv["length"] = function (array) {
 topEnv["element"] = function (array, i) {
     return array[i];
 };
+
+specialForms["set"] = function (args, env) {
+    if (args.length != 2 || args[0].type != "word") {
+        throw new SyntaxError("Bad use of set");
+    }
+
+    var varName = args[0].name,
+        value   = evaluate(args[1], env);
+
+    for (var scope = env; scope; scope = Object.getPrototypeOf(scope)) {
+        if (Object.prototype.hasOwnProperty.call(scope, varName)) {
+            scope[varName] = value;
+            return value;
+        }
+    }
+
+    throw new ReferenceError("Setting undefined variable " + varName);
+};

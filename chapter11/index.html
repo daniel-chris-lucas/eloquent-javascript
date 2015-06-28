@@ -35,6 +35,13 @@
 
         console.log(parse("# hello\nx"));
         console.log(parse("a # one\n   # two\n()"));
+
+        run("do(define(x, 4),",
+            "   define(setx, fun(val, set(x, val))),",
+            "   setx(50),",
+            "   print(x))");
+
+        run("set(quux, true)");
     </script>
 </body>
 </html>
