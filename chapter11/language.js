@@ -25,12 +25,8 @@ function parseExpression (program) {
  * Remove white space from the functions
  */
 function skipSpace (string) {
-    var first = string.search(/\S/);
-    if (first == -1) {
-        return "";
-    }
-
-    return string.slice(first);
+    var skippable = string.match(/^(\s|#.*)*/);
+    return string.slice(skippable[0].length);
 }
 
 /**
