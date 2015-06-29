@@ -295,5 +295,50 @@ DOMDisplay.prototype.drawFrame = function () {
 
     this.actorLayer = this.wrap.appendChild(this.drawActors());
     this.wrap.className = "game " + (this.level.status || "");
+    // If game is larger than screen make sure the player is in the viewport.
     this.scrollPlayerIntoView();
-}
+};
+
+/**
+ * Scroll the player into view.
+ *
+ * Make sure the player is in the center of the viewport if
+ * the game is larger than the screen.
+ */
+DOMDisplay.prototype.scrollPlayerIntoView = function () {
+    var width  = this.wrap.clientWidth,
+        height = this.wrap.clientHeight,
+        margin = width / 3;
+
+    // The viewport
+    var left   = this.wrap.scrollLeft,
+        right  = left + width,
+        top    = this.wrap.scrollTop,
+        bottom = top + height,
+        player = this.level.player,
+        // To find center multiply the players size by half then multiply
+        // by the scale.
+        center = player.pos.plus(player.size.times(0.5)).times(scale);
+
+    if (center.x < left + margin) {
+        this.wrap.scrollLeft = center.x - margin;
+    } else if (center.x > right - margin) {
+        this.wrap.scrollLeft = center.x + margin - width;
+    }
+
+    if (center.y < top + margin) {
+        this.wrap.scrollTop = center.y + margin;
+    } else if (center.y > bottom - margin) {
+        this.wrap.scrollTop = center.y + margin - height;
+    }
+};
+
+/**
+ * Clear the actors layer.
+ *
+ * Clear the actors layer from the game.
+ * Used when moving to next level or resetting the current level.
+ */
+DOMDisplay.prototype.clear = function () {
+    this.wrap.parentNode.removeChild(this.wrap);
+};

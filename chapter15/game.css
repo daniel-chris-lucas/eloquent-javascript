@@ -28,6 +28,13 @@
     background: rgb(64, 64, 64);
 }
 
+.game {
+    overflow: hidden;
+    max-width: 600px;
+    max-height: 450px;
+    position: relative;
+}
+
 .lost .player {
     background: rgb(160, 64, 64);
 }
