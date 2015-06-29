@@ -545,3 +545,31 @@ Player.prototype.act = function (step, level, keys) {
         this.size.y -= step;
     }
 };
+
+/**
+ * When the player touches something decide what to do.
+ *
+ * If the player has touched lava the game is lost.
+ * If a coin is touched it is removed from the array of actors.
+ * If it was the last coin the game is won.
+ * 
+ * @param  {String} type  The type of actor that was touched.
+ * @param  {mixed} actor The value of the actor that was touched.
+ */
+Level.prototype.playerTouched = function (type, actor) {
+    if (type == "lava" && this.status == null) {
+        this.status = "lost";
+        this.finishDelay = 1;
+    } else if (type == "coin") {
+        this.actors = this.actors.filter(function (other) {
+            return other != actor;
+        });
+
+        if (! this.actors.some(function (actor) {
+            return actor.type == "coin";
+        })) {
+            this.status = "won";
+            this.finishDelay = 1;
+        }
+    }
+};
