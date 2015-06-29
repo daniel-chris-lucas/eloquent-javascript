@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs</title>
+</head>
+<body>
+    <h1>Tabs</h1>
+
+    <p>
+      A tabbed interface is a common design pattern. It allows you to select an interface panel <br>
+      by choosing from a number of tabs “sticking out” above an element.
+    </p>
+    <p>
+      In this exercise you’ll implement a simple tabbed interface. Write a function, asTabs, that <br>
+      takes a DOM node and creates a tabbed interface showing the child elements of that node. It <br>
+      should insert a list of &lt;button&gt; elements at the top of the node, one for each child <br>
+      element, containing text retrieved from the data-tabname attribute of the child. All but <br>
+      one of the original children should be hidden (given a display style of none), and the <br>
+      currently visible node can be selected by clicking the buttons.
+    </p>
+    <p>
+      When it works, extend it to also style the currently active button differently.
+    </p>
+
+    <hr>
+
+    <div id="wrapper">
+      <div data-tabname="one">Tab one</div>
+      <div data-tabname="two">Tab two</div>
+      <div data-tabname="three">Tab three</div>
+    </div>
+
+    <script>
+      function asTabs (node) {
+        var tabs = [];
+
+        for (var i = 0; i < node.childNodes.length; i++) {
+          var child = node.childNodes[i];
+          if (child.nodeType == document.ELEMENT_NODE) {
+            tabs.push(child);
+          }
+        }
+
+        var tabList = document.createElement('div');
+        tabs.forEach(function (tab, i) {
+          var button = document.createElement('button');
+          button.textContent = tab.getAttribute('data-tabname');
+          button.addEventListener('click', function () {
+            selectTab(i);
+          });
+          tabList.appendChild(button);
+        });
+
+        node.insertBefore(tabList, node.firstChild);
+
+        function selectTab (n) {
+          tabs.forEach(function (tab, i) {
+            if (i == n) {
+              tab.style.display = "";
+            } else {
+              tab.style.display = "none";
+            }
+          });
+
+          for (var i = 0; i < tabList.childNodes.length; i++) {
+            if (i == n) {
+              tabList.childNodes[i].style.background = "violet";
+            } else {
+              tabList.childNodes[i].style.background = "";
+            }
+          }
+        }
+
+        selectTab(0);
+      }
+
+      asTabs(document.querySelector('#wrapper'));
+    </script>
+</body>
+</html>
