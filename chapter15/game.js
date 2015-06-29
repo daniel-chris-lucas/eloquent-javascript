@@ -573,3 +573,28 @@ Level.prototype.playerTouched = function (type, actor) {
         }
     }
 };
+
+var arrowCodes = {37: "left", 38: "up", 39: "right"};
+
+/**
+ * Detect which key the user is pressing.
+ * @param  {Object} codes Map of what the arrow keys should do.
+ * @return {Object}       Details of the key that was pressed.
+ */
+function trackKeys (codes) {
+    var pressed = Object.create(null);
+
+    function handler (event) {
+        if (codes.hasOwnProperty(event.keyCode)) {
+            var down = 
+            event.type = "keydown";
+
+            pressed[codes[event.keyCode]] = down;
+            event.preventDefault();
+        }
+    }
+
+    addEventListener("keydown", handler);
+    addEventListener("keyup", handler);
+    return pressed;
+}
