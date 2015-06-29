@@ -394,3 +394,24 @@ Level.prototype.actorAt = function (actor) {
         }
     }
 };
+
+var maxStep = 0.05;
+
+/**
+ * Move the actors on the screen.
+ * @param  {Integer} step The step in seconds.
+ * @param  {Object} keys Information about the arrow keys the player has pressed.
+ */
+Level.prototype.animate = function (step, keys) {
+    if (this.status != null) {
+        this.finishDelay -= step;
+    }
+
+    while (step > 0) {
+        var thisStep = Math.min(step, maxStep);
+        this.actors.forEach(function (actor) {
+            actor.act(thisStep, this, keys);
+        }, this);
+        step -= thisStep;
+    }
+};
