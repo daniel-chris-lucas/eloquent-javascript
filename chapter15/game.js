@@ -456,3 +456,64 @@ Coin.prototype.act = function (step) {
     var wobblePos = Math.sin(this.wobble) * wobbleDist;
     this.pos = this.basePos.plus(new Vector(0, wobblePos));
 };
+
+var playerXSpeed = 7;
+
+/**
+ * Compute the horizontal motion of the player based on the state
+ * of the left and right arrow keys.
+ * 
+ * @param  {Integer} step  The step in seconds.
+ * @param  {Level} level The level the player is on.
+ * @param  {Object} keys  Information about the status of the arrow keys.
+ */
+Player.prototype.moveX = function (step, level, keys) {
+    this.speed.x = 0;
+
+    if (keys.left) {
+        this.speed.x -= playerXSpeed;
+    }
+
+    if (keys.right) {
+        this.speed.x += playerXSpeed;
+    }
+
+    var motion   = new Vector(this.speed.x * step, 0),
+        newPos   = this.pos.plus(motion),
+        obstacle = level.obstacleAt(newPos, this.size);
+
+    if (obstacle) {
+        level.playerTouched(obstacle);
+    } else {
+        this.pos = newPos;
+    }
+};
+
+var gravity   = 30,
+    jumpSpeed = 17;
+
+/**
+ * Accelerate player vertically at the beginning to account for gravity.
+ * If the player is moving down and pressing up, revserse speed when player
+ * hits the ground.
+ * If going up and no obstacle move the player.
+ * 
+ * @param  {Integer} step  The step in seconds.
+ * @param  {Level} level The level the player is on.
+ * @param  {Object} keys  Details about the status of the keys.
+ */
+Player.prototype.moveY = function (step, level, keys) {
+    this.speed.y += step * gravity;
+
+    var motion   = new Vector(0, this.speed.y * step),
+        newPos   = this.pos.plus(motion),
+        obstacle = level.obstacleAt(newPos, this.size);
+
+    if (obstacle) {
+        level.playerTouched(obstacle);
+    } else if (keys.up && this.speed.y > 0) {
+        this.speed.y = -jumpSpeed;
+    } else {
+        this.pos = newPos;
+    }
+};
