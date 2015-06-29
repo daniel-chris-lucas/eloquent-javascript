@@ -234,6 +234,14 @@ function DOMDisplay (parent, level) {
 // A single pixel per unit would be tiny.
 var scale = 20;
 
+/**
+ * Draw the background of the game.
+ *
+ * Creates a table for the DOM with the width and height of the Level.
+ * Draws one table cell for each grid position.
+ * 
+ * @return {Object} DOM element for the background table.
+ */
 DOMDisplay.prototype.drawBackground = function () {
     var table = elt("table", "background");
     table.style.width = this.level.width * scale + "px";
@@ -245,6 +253,47 @@ DOMDisplay.prototype.drawBackground = function () {
             rowElt.appendChild(elt("td", type));
         });
     });
-    
+
     return table;
 };
+
+/**
+ * Draw the actor layer of the game.
+ *
+ * For each actor in the game drawActors will create a div for the DOM
+ * that has a class of 'actor actor_type':
+ * 'actor coin', 'actor player'...
+ * 
+ * @return {Object} DOM object (div) containing other DOM objects that
+ * represent the different actors of the game.
+ */
+DOMDisplay.prototype.drawActors = function () {
+    var wrap = elt("div");
+
+    this.level.actors.forEach(function (actor) {
+        var rect = wrap.appendChild(elt("div", "actor " + actor.type));
+        rect.style.width = actor.size.x * scale + "px";
+        rect.style.height = actor.size.y * scale + "px";
+        rect.style.left = actor.pos.x * scale + "px";
+        rect.style.top = actor.pos.y * scale + "px";
+    });
+
+    return wrap;
+};
+
+/**
+ * Draw the frames.
+ *
+ * Each time the game is redrawn remove all the actors and redraw them.
+ * With the number of actors on the screen it's not too resource intensive
+ * and is quicker than trying to reuse existing items.
+ */
+DOMDisplay.prototype.drawFrame = function () {
+    if (this.actorLayer) {
+        this.wrap.removeChild(this.actorLayer);
+    }
+
+    this.actorLayer = this.wrap.appendChild(this.drawActors());
+    this.wrap.className = "game " + (this.level.status || "");
+    this.scrollPlayerIntoView();
+}
