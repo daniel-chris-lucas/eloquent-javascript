@@ -407,6 +407,9 @@ Level.prototype.animate = function (step, keys) {
         this.finishDelay -= step;
     }
 
+    // Make sure that the step isn't too large.
+    // Instead of having a large step like 0.12s cut it down into smaller steps
+    // of 0.05 + 0.05 + 0.02
     while (step > 0) {
         var thisStep = Math.min(step, maxStep);
         this.actors.forEach(function (actor) {
@@ -414,4 +417,42 @@ Level.prototype.animate = function (step, keys) {
         }, this);
         step -= thisStep;
     }
+};
+
+/**
+ * Action method for Lava.
+ *
+ * Make the Lava move, compute new position by adding product of the time
+ * step and its current speed to its old position.
+ * Move there if there is no obstacle.
+ * If bouncing lava, invert the speed.
+ * 
+ * @param  {Integer} step  The step in seconds.
+ * @param  {Level} level The Level that is being played.
+ */
+Lava.prototype.act = function (step, level) {
+    var newPos = this.pos.plus(this.speed.times(step));
+    if (! level.obstacleAt(newPos, this.size)) {
+        this.pos = newPos;
+    } else if (this.repeatPos) {
+        this.pos = this.repeatPos;
+    } else {
+        this.speed = this.speed.times(-1);
+    }
+};
+
+var wobbleSpeed = 8,
+    wobbleDist  = 0.07;
+
+/**
+ * Action method for Coin.
+ *
+ * Make the Coin wobble. Coins don't worry about collision as they simply
+ * wobble in their own square.
+ * @param  {Integer} step The step in seconds.
+ */
+Coin.prototype.act = function (step) {
+    this.wobble += step * wobbleSpeed;
+    var wobblePos = Math.sin(this.wobble) * wobbleDist;
+    this.pos = this.basePos.plus(new Vector(0, wobblePos));
 };
