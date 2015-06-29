@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The cat's hat</title>
+
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      td, th {
+        border: 1px solid black;
+        padding: 3px 8px;
+      }
+
+      th {
+        text-align: left;
+      }
+    </style>
+</head>
+<body>
+    <h1>The cat's hat</h1>
+
+    <p>
+      Extend the cat animation defined earlier so that both the cat and his hat <br>
+      (&lt;img src="img/hat.png"&rt;) orbit at opposite sides of the ellip
+    </p>
+    <p>
+      Or make the hat circle around the cat. Or alter the animation in some other <br>
+      interesting way.
+    </p>
+    <p>
+      To make positioning multiple objects easier, it is probably a good idea to switch to <br>
+      absolute positioning. This means that top and left are counted relative to the top left <br>
+      of the document. To avoid using negative coordinates, you can simply add a fixed number <br>
+      of pixels to the position values.
+    </p>
+    <hr>
+    <div style="min-height: 200px; position: relative;">
+      <img src="deps/cat.png" id="cat" style="position: absolute;">
+      <img src="deps/hat.png" id="hat" style="position: absolute;">
+    </div>
+
+    <script>
+      var cat      = document.querySelector('#cat'),
+          hat      = document.querySelector('#hat'),
+          angle    = 0,
+          lastTime = null;
+
+      function animate (time) {
+        if (lastTime != null) {
+          angle += (time - lastTime) * 0.0015;
+        }
+
+        lastTime = time;
+
+        cat.style.top = (Math.sin(angle) * 50 + 80) + "px";
+        cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
+
+        // By adding π to the angle, the hat ends up half a circle ahead of the cat
+        var hatAngle = angle + Math.PI;
+        hat.style.top = (Math.sin(hatAngle) * 50 + 80) + "px";
+        hat.style.left = (Math.cos(hatAngle) * 200 + 230) + "px";
+
+        requestAnimationFrame(animate);
+      }
+
+      requestAnimationFrame(animate);
+    </script>
+</body>
+</html>

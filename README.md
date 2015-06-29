@@ -65,3 +65,4 @@ This repository is in no way related with the work of the book's author.
 
 1. Build a table
 2. Elements by tag name
+3. The cat's hat
