@@ -140,3 +140,34 @@ function Player (pos) {
  * @type {String}
  */
 Player.prototype.type = "player";
+
+/**
+ * Build Lava object.
+ *
+ * Different characters behave differently.
+ * '=': horizontal lava bounces back and forth
+ * '|': dripping lava moves up and down
+ * 'v': dripping lava. Jumps back to top.
+ * 
+ * @param {Vector} pos The coordinates of the Lava.
+ * @param {string} ch  The character representing the Lava.
+ */
+function Lava (pos, ch) {
+    this.pos = pos;
+    this.size = new Vector(1, 1);
+
+    if (ch == "=") {
+        this.speed = new Vector(2, 0);
+    } else if (ch == "|") {
+        this.speed = new Vector(0, 2);
+    } else if (ch == "v") {
+        this.speed = new Vector(0, 3);
+        this.repeatPos = pos;
+    }
+}
+
+/**
+ * Type attribute for the Lava.
+ * @type {String}
+ */
+Lava.prototype.type = "lava";
