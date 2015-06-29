@@ -56,7 +56,7 @@ function Level (plan) {
         return actor.type == "player";
     })[0];
 
-    this.status = null;
+    this.status = 
     this.finishDelay = null;
 }
 
@@ -171,3 +171,28 @@ function Lava (pos, ch) {
  * @type {String}
  */
 Lava.prototype.type = "lava";
+
+/**
+ * Build Coin object.
+ *
+ * The coins move in a wavy motion going from 0 to 2π.
+ * To avoid all coins moving synchronously the starting point is
+ * set randomly.
+ * 
+ * @param {Vector} pos The coordinates of the Coin.
+ */
+function Coin (pos) {
+    this.basePos = 
+    this.pos = pos.plus(new Vector(0.2, 0.1));
+    this.size = new Vector(0.6, 0.6);
+    this.wobble = Math.random() * Math.PI * 2;
+}
+
+/**
+ * Type attribute for the Coin.
+ * @type {String}
+ */
+Coin.prototype.type = "coin";
+
+// Build the Level using the plan.
+var simpleLevel = new Level(simpleLevelPlan);
