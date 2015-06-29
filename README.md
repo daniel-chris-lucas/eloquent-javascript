@@ -60,3 +60,7 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 11 : A Programming Language
 
 1. A programming language
+
+### Chapter 13 : The Document Object Model
+
+1. Build a table
