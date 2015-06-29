@@ -517,3 +517,31 @@ Player.prototype.moveY = function (step, level, keys) {
         this.pos = newPos;
     }
 };
+
+/**
+ * Action method for Player.
+ *
+ * Call the moveX and moveY methods.
+ * If the player has touched something call the playerTouched method.
+ * If the player has lost, make the player shrink down.
+ * 
+ * @param  {[type]} step  [description]
+ * @param  {[type]} level [description]
+ * @param  {[type]} keys  [description]
+ * @return {[type]}       [description]
+ */
+Player.prototype.act = function (step, level, keys) {
+    this.moveX(step, level, keys);
+    this.moveY(step, level, keys);
+
+    var otherActor = level.actorAt(this);
+    if (otherActor) {
+        level.playerTouched(otherActor.type, otherActor);
+    }
+
+    // Losing animation
+    if (level.status == "lost") {
+        this.pos.y = step;
+        this.size.y -= step;
+    }
+};
