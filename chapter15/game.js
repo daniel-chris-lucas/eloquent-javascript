@@ -116,7 +116,7 @@ var actorChars = {
     "@": Player,
     "o": Coin,
     "=": Lava,
-    "|": Lava;
+    "|": Lava,
     "v": Lava
 };
 
@@ -196,3 +196,55 @@ Coin.prototype.type = "coin";
 
 // Build the Level using the plan.
 var simpleLevel = new Level(simpleLevelPlan);
+
+/**
+ * Create a DOM element.
+ * 
+ * @param  {String} name      The type of DOM element to create.
+ * @param  {String} className Optional class to add on the DOM element.
+ * @return {Object}           The DOM element that has been created.
+ */
+function elt (name, className) {
+    var elt = document.createElement(name);
+    if (className) {
+        elt.className = className;
+    }
+    return elt;
+}
+
+/**
+ * Set up the DOM display.
+ *
+ * Creates a div that is injected into the game's frame.
+ * Calls functions to draw the background, the actor layer and the frame.
+ * 
+ * @param {Object} parent The DOM object the game should be inserted in.
+ * @param {Level} level   The Level object that represents the game.
+ */
+function DOMDisplay (parent, level) {
+    this.wrap = parent.appendChild(elt('div', 'game'));
+    this.level = level;
+
+    this.wrap.appendChild(this.drawBackground());
+    this.actorLayer = null;
+    this.drawFrame();
+}
+
+// How much should a single unit be scaled by?
+// A single pixel per unit would be tiny.
+var scale = 20;
+
+DOMDisplay.prototype.drawBackground = function () {
+    var table = elt("table", "background");
+    table.style.width = this.level.width * scale + "px";
+
+    this.level.grid.forEach(function (row) {
+        var rowElt = table.appendChild(elt("tr"));
+        rowElt.style.height = scale + "px";
+        row.forEach(function (type) {
+            rowElt.appendChild(elt("td", type));
+        });
+    });
+    
+    return table;
+};
