@@ -64,3 +64,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 13 : The Document Object Model
 
 1. Build a table
+2. Elements by tag name
