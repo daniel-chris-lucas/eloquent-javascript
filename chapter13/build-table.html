@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Build a table</title>
+
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      td, th {
+        border: 1px solid black;
+        padding: 3px 8px;
+      }
+
+      th {
+        text-align: left;
+      }
+    </style>
+</head>
+<body>
+    <h1>Build a table</h1>
+
+    <p>
+      Write a function buildTable that, given an array of objects that all have the <br>
+      same set of properties, builds up a DOM structure representing a table. The <br>
+      table should have a header row with the property names wrapped in &lt;th&gt; elements <br>
+      and should have one subsequent row per object in the array, with its property <br>
+      values in <td> elements.
+    </p>
+    <p>
+      The Object.keys function, which returns an array containing the property names that <br>
+      an object has, will probably be helpful here.
+    </p>
+    <p>
+      Once you have the basics working, right-align cells containing numbers by setting <br>
+      their style.textAlign property to "right".
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script src="mountains.js"></script>
+
+    <script>
+      function buildTable () {
+        
+      };
+
+      document.body.appendChild(buildTable(MOUNTAINS));
+    </script>
+</body>
+</html>
