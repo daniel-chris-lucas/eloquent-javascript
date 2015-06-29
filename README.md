@@ -70,3 +70,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 14 : Handling Events
 
 1. Censored keyboard
+2. Mouse trail
