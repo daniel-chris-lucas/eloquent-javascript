@@ -598,3 +598,73 @@ function trackKeys (codes) {
     addEventListener("keyup", handler);
     return pressed;
 }
+
+/**
+ * Helper function for handling animations. Hide away use of requestAnimationFrame.
+ *
+ * @param  {Function} frameFunc Callback to use when calling runAnimation.
+ */
+function runAnimation (frameFunc) {
+    var lastTime = null;
+
+    function frame (time) {
+        var stop = false;
+
+        if (lastTime != null) {
+            // Maximum frame step of 100ms.
+            var timeStep = Math.min(time - lastTime, 100) / 100;
+            stop = frameFunc(timeStep) === false;
+        }
+
+        lastTime = time;
+
+        if (! stop) {
+            requestAnimationFrame(frame);
+        }
+    }
+
+    requestAnimationFrame(frame);
+}
+
+var arrows = trackKeys(arrowCodes);
+
+/**
+ * Function for running the level. Sets up the display and runs the animations.
+ *
+ * @param  {Level} level   The Level the player is on.
+ * @param  {Display} Display The display class the game should use.
+ * @param  {Function} andThen Callback function for when the level is finished.
+ */
+function runLevel (level, Display, andThen) {
+    var display = new Display(document.body, level);
+
+    runAnimation(function (step) {
+        level.animate(step, arrows);
+        display.drawFrame(step);
+        if (level.isFinished()) {
+            display.clear();
+
+            if (andThen) {
+                andThen(level.status);
+            }
+
+            return false;
+        }
+    });
+}
+
+function runGame (plans, Display) {
+    function startLevel (n) {
+        runLevel(new Level(plans[n]), Display, function (status) {
+            if (status == "lost") {
+                startLevel(n);
+            } else if (n < plans.length - 1) {
+                startLevel(n + 1);
+            } else {
+                console.log('You win')
+            }
+        });
+    }
+
+    startLevel(0);
+}
