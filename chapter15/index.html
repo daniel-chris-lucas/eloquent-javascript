@@ -8,10 +8,13 @@
 </head>
 <body>
     <script src="game.js"></script>
+    <script src="game_levels.js"></script>
 
     <script>
-        var simpleLevel = new Level(simpleLevelPlan),
-            display = new DOMDisplay(document.body, simpleLevel);
+        /*var simpleLevel = new Level(simpleLevelPlan),
+            display = new DOMDisplay(document.body, simpleLevel);*/
+
+        runGame(GAME_LEVELS, DOMDisplay);
     </script>
 </body>
 </html>
