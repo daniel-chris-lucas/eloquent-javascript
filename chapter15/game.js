@@ -511,8 +511,12 @@ Player.prototype.moveY = function (step, level, keys) {
 
     if (obstacle) {
         level.playerTouched(obstacle);
-    } else if (keys.up && this.speed.y > 0) {
-        this.speed.y = -jumpSpeed;
+
+        if (keys.up && this.speed.y > 0) {
+            this.speed.y = -jumpSpeed;
+        } else {
+            this.speed.y = 0;
+        }
     } else {
         this.pos = newPos;
     }
@@ -586,8 +590,7 @@ function trackKeys (codes) {
 
     function handler (event) {
         if (codes.hasOwnProperty(event.keyCode)) {
-            var down = 
-            event.type = "keydown";
+            var down = event.type = "keydown";
 
             pressed[codes[event.keyCode]] = down;
             event.preventDefault();
