@@ -56,8 +56,7 @@ function Level (plan) {
         return actor.type == "player";
     })[0];
 
-    this.status = 
-    this.finishDelay = null;
+    this.status = this.finishDelay = null;
 }
 
 /**
@@ -182,8 +181,7 @@ Lava.prototype.type = "lava";
  * @param {Vector} pos The coordinates of the Coin.
  */
 function Coin (pos) {
-    this.basePos = 
-    this.pos = pos.plus(new Vector(0.2, 0.1));
+    this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1));
     this.size = new Vector(0.6, 0.6);
     this.wobble = Math.random() * Math.PI * 2;
 }
@@ -327,7 +325,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function () {
     }
 
     if (center.y < top + margin) {
-        this.wrap.scrollTop = center.y + margin;
+        this.wrap.scrollTop = center.y - margin;
     } else if (center.y > bottom - margin) {
         this.wrap.scrollTop = center.y + margin - height;
     }
@@ -545,7 +543,7 @@ Player.prototype.act = function (step, level, keys) {
 
     // Losing animation
     if (level.status == "lost") {
-        this.pos.y = step;
+        this.pos.y += step;
         this.size.y -= step;
     }
 };
@@ -590,7 +588,7 @@ function trackKeys (codes) {
 
     function handler (event) {
         if (codes.hasOwnProperty(event.keyCode)) {
-            var down = event.type = "keydown";
+            var down = event.type == "keydown";
 
             pressed[codes[event.keyCode]] = down;
             event.preventDefault();
