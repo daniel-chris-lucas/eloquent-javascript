@@ -76,3 +76,7 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 15 : A Platform Game
 
 1. A platform game
+
+### Chapter 16 : Drawing on Canvas
+
+1. Shapes
