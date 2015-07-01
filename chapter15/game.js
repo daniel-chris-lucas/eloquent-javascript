@@ -667,5 +667,22 @@ function runGame (plans, Display) {
         });
     }
 
-    startLevel(0);
+    function startLevelWithLives (n, lives) {
+        runLevel(new Level(plans[n]), Display, function (status) {
+            if (status == "lost") {
+                if (lives > 0) {
+                    startLevelWithLives(n, lives - 1);
+                } else {
+                    console.log("Game over");
+                    startLevelWithLives(0, 3);
+                }
+            } else if (n < plans.length - 1) {
+                startLevelWithLives(n + 1, lives);
+            } else {
+                console.log('You win');
+            }
+        });
+    }
+
+    startLevelWithLives(0, 3);
 }
