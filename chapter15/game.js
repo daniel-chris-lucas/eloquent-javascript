@@ -820,3 +820,38 @@ Canvas.prototype.clearDisplay = function () {
 
 var otherSprites = document.createElement("img");
 otherSprites.src = "img/sprites.png";
+
+/**
+ * Draw the background.
+ */
+CanvasDisplay.prototype.drawBackground = function () {
+    var view   = this.viewport,
+        xStart = Math.floor(view.left),
+        xEnd   = Math.ceil(view.left + view.width),
+        yStart = Math.floor(view.top),
+        yEnd   = Math.ceil(view.top + view.height);
+
+    for (var y = yStart; y < yEnd; y++) {
+        for (var x = xStart; x < xEnd; x++) {
+            var tile = this.level.grid[y][x];
+            if (tile == null) {
+                continue;
+            }
+
+            var screenX = (x - view.left) * scale,
+                screenY = (y - view.top) * scale,
+                tileX   = tile == "lava" ? scale : 0;
+
+            this.cx.drawImage(
+                otherSprites, 
+                tileX, 0, scale, scale, 
+                screenX, screenY, scale, scale);
+        }
+    }
+};
+
+var playerSprites = document.createElement("img");
+playerSprites.src = "img/player.png";
+var playerXOverlap = 4;
+
+
