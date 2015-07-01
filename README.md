@@ -72,3 +72,7 @@ This repository is in no way related with the work of the book's author.
 1. Censored keyboard
 2. Mouse trail
 3. Tabs
+
+### Chapter 15 : A Platform Game
+
+1. A platform game
