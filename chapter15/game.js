@@ -588,15 +588,21 @@ function trackKeys (codes) {
 
     function handler (event) {
         if (codes.hasOwnProperty(event.keyCode)) {
-            var down = event.type == "keydown";
+            var state = event.type == "keydown";
 
-            pressed[codes[event.keyCode]] = down;
+            pressed[codes[event.keyCode]] = state;
             event.preventDefault();
         }
     }
 
     addEventListener("keydown", handler);
     addEventListener("keyup", handler);
+
+    pressed.unregister = function () {
+        removeEventListener("keydown", handler);
+        removeEventListener("keyup", handler);
+    };
+
     return pressed;
 }
 
@@ -637,13 +643,39 @@ var arrows = trackKeys(arrowCodes);
  * @param  {Function} andThen Callback function for when the level is finished.
  */
 function runLevel (level, Display, andThen) {
-    var display = new Display(document.body, level);
+    var display = new Display(document.body, level),
+        running = "yes";
 
-    runAnimation(function (step) {
+    function handleKey (event) {
+        if (event.keyCode == 27) {
+            if (running == "no") {
+                running = "yes";
+                runAnimation(animation);
+            } else if (running == "pausing") {
+                running = "yes";
+            } else if (running == "yes") {
+                running = "pausing";
+            }
+        }
+    }
+
+    addEventListener("keydown", handleKey);
+    var arrows = trackKeys(arrowCodes);
+
+    function animation (step) {
+        if (running == "pausing") {
+            running = "no";
+            return false;
+        }
+
         level.animate(step, arrows);
         display.drawFrame(step);
+
         if (level.isFinished()) {
             display.clear();
+            // Remove all event handlers
+            removeEventListener("keydown", handleKey);
+            arrows.unregister();
 
             if (andThen) {
                 andThen(level.status);
@@ -651,7 +683,9 @@ function runLevel (level, Display, andThen) {
 
             return false;
         }
-    });
+    }
+
+    runAnimation(animation);
 }
 
 function runGame (plans, Display) {
