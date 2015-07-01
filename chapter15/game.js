@@ -776,7 +776,7 @@ CanvasDisplay.prototype.drawFrame = function (step) {
 /**
  * Move the viewport so that the player is always inside.
  */
-Canvas.prototype.updateViewport = function () {
+CanvasDisplay.prototype.updateViewport = function () {
     var view   = this.viewport,
         margin = view.width / 3,
         player = this.level.player,
@@ -806,7 +806,7 @@ Canvas.prototype.updateViewport = function () {
  *
  * Draw a solid color across the whole canvas to clear it.
  */
-Canvas.prototype.clearDisplay = function () {
+CanvasDisplay.prototype.clearDisplay = function () {
     if (this.level.status == "won") {
         this.cx.fillStyle = "rgb(68, 191, 255)";
     } else if (this.level.status == "lost") {
@@ -854,4 +854,77 @@ var playerSprites = document.createElement("img");
 playerSprites.src = "img/player.png";
 var playerXOverlap = 4;
 
+/**
+ * Helper function for horizontally flipping an element.
+ */
+function flipHorizontally (context, around) {
+    context.translate(around, 0);
+    context.scale(-1, 1);
+    context.translate(-around, 0);
+}
 
+/**
+ * Display the player.
+ *
+ * Checks what the player is doing and displays the sprite for the player.
+ * 
+ * @param  {Integer} x      The player's x position
+ * @param  {Integer} y      The player's y position 
+ * @param  {Integer} width  The width of the player
+ * @param  {Integer} height The height of the player
+ */
+CanvasDisplay.prototype.drawPlayer = function (x, y, width, height) {
+    var sprite = 8,
+        player = this.level.player;
+
+    width += playerXOverlap * 2;
+    x -= playerXOverlap;
+
+    if (player.speed.x != 0) {
+        this.flipPlayer = player.speed.x < 0;
+    }
+
+    if (player.speed.y != 0) {
+        sprite = 9;
+    } else if (player.speed.x != 0) {
+        sprite = Math.floor(this.animationTime * 12) % 8;
+    }
+
+    this.cx.save();
+    if (this.flipPlayer) {
+        flipHorizontally(this.cx, x + width / 2);
+    }
+
+    this.cx.drawImage(
+        playerSprites, 
+        sprite * width, 0, width, height, 
+        x, y, width, height
+    );
+
+    this.cx.restore();
+};
+
+/**
+ * Draw the actors on the screen.
+ *
+ * If not the player, coin sprite is third, lava is second.
+ */
+CanvasDisplay.prototype.drawActors = function () {
+    this.level.actors.forEach(function (actor) {
+        var width  = actor.size.x * scale,
+            height = actor.size.y * scale,
+            x      = (actor.pos.x - this.viewport.left) * scale,
+            y      = (actor.pos.y - this.viewport.top) * scale;
+
+        if (actor.type == "player") {
+            this.drawPlayer(x, y, width, height);
+        } else {
+            var tileX = (actor.type == "coin" ? 2 : 1) * scale;
+            this.cx.drawImage(
+                otherSprites, 
+                tileX, 0, width, height, 
+                x, y, width, height
+            );
+        }
+    }, this);
+};
