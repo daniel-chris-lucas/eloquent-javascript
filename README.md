@@ -82,3 +82,7 @@ This repository is in no way related with the work of the book's author.
 1. Shapes
 2. The pie chart
 3. A bouncing ball
+
+### Chapter 17 : HTTP
+
+1. Content negotiation
