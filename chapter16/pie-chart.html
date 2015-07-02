@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The pie chart</title>
+</head>
+<body>
+    <canvas width="600" height="300"></canvas>
+
+    <script>
+        var cx = document.querySelector("canvas").getContext("2d");
+
+        var results = [
+          {name: "Satisfied", count: 1043, color: "lightblue"},
+          {name: "Neutral", count: 563, color: "lightgreen"},
+          {name: "Unsatisfied", count: 510, color: "pink"},
+          {name: "No comment", count: 175, color: "silver"}
+        ];
+
+        var total = results.reduce(function (sum, choice) {
+            return sum + choice.count;
+        }, 0);
+
+        var currentAngle = -0.5 * Math.PI,
+            centerX      = 300,
+            centerY      = 150;
+
+        results.forEach(function (result) {
+            var sliceAngle = (result.count / total) * 2 * Math.PI;
+
+            cx.beginPath();
+            cx.arc(centerX, centerY, 100, currentAngle, currentAngle + sliceAngle);
+
+            var middleAngle = currentAngle * 0.5 * sliceAngle,
+                textX       = Math.cos(middleAngle) * 120 + centerX,
+                textY       = Math.sin(middleAngle) * 120 + centerY;
+
+            cx.textBaseLine = "middle";
+
+            if (Math.cos(middleAngle) > 0) {
+                cx.textAlign = "left";
+            } else {
+                cx.textAlign = "right";
+            }
+
+            cx.font = "15px sans-serif";
+            cx.fillStyle = "black";
+            cx.fillText(result.name, textX, textY);
+
+            currentAngle += sliceAngle;
+            cx.lineTo(centerX, centerY);
+            cx.fillStyle = result.color;
+            cx.fill();
+        });
+    </script>
+</body>
+</html>

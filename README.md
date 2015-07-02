@@ -80,3 +80,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 16 : Drawing on Canvas
 
 1. Shapes
+2. The pie chart
