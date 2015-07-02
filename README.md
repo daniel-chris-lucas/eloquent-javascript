@@ -86,3 +86,4 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 17 : HTTP
 
 1. Content negotiation
+2. Waiting for multiple promises
