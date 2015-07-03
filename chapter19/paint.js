@@ -82,3 +82,42 @@ controls.tool = function (cx) {
 
     return elt("span", null, "Tool: ", select);
 };
+
+/**
+ * Retrieve canvas-relative coordinates of a given mouse event.
+ * 
+ * @param  {Event} event    The mouse event.
+ * @param  {Object} element The element the event is happening on.
+ * @return {Object}         X and Y coordinates relative to the element.
+ */
+function relativePos (event, element) {
+    var rect = element.getBoundingClientRect();
+
+    return {
+        x: Math.floor(event.clientX - rect.left),
+        y: Math.floor(event.clientY - rect.top)
+    };
+}
+
+/**
+ * Listen for mousemove events as long as the mouse button is held down.
+ *
+ * Takes care of the event registration and unregistration for mouse
+ * dragging.
+ * 
+ * @param  {Function} onMove Function to run while mouse is moving.
+ * @param  {Function} onEnd  Optional function to run when button is released.
+ */
+function trackDrag (onMove, onEnd) {
+    function end (event) {
+        removeEventListener("mousemove", onMove);
+        removeEventListener("mouseup", end);
+
+        if (onEnd) {
+            onEnd(event);
+        }
+    }
+
+    addEventListener("mousemove", onMove);
+    addEventListener("mouseup", end);
+};
