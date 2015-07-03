@@ -226,3 +226,74 @@ controls.save = function (cx) {
     link.addEventListener("focus", update);
     return link;
 };
+
+/**
+ * Load an image from a URL and resize the canvas to the size of the image.
+ * 
+ * @param  {Object} cx  The context to draw on.
+ * @param  {String} url URL of the image to load.
+ */
+function loadImageURL(cx, url) {
+    var image = document.createElement("img");
+
+    image.addEventListener("load", function () {
+        var color = cx.fillStyle,
+            size  = cx.lineWidth;
+
+        cx.canvas.width  = image.width;
+        cx.canvas.height = image.height;
+        cx.drawImage(image, 0, 0);
+        cx.fillStyle   = color;
+        cx.strokeStyle = color;
+        cx.lineWidth   = size;
+    });
+
+    image.src = url;
+}
+
+/**
+ * Open file control.
+ * 
+ * @param  {Object} cx Context to draw on.
+ * @return {Object}    Element containing the file control.
+ */
+controls.openFile = function (cx) {
+    var input = elt("input", {type: "file"});
+
+    input.addEventListener("change", function () {
+        if (input.files.length == 0) {
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+            loadImageURL(cx, reader.result);
+        });
+
+        reader.readAsDataURL(input.files[0]);
+    });
+
+    return elt("div", null, "Open file: ", input);
+};
+
+/**
+ * Control for opening a saved image.
+ * 
+ * @param  {Object} cx The context to draw on.
+ * @return {Object}    Element containing the URL form.
+ */
+controls.openURL = function (cx) {
+    var input = elt("input", {type: "text"}),
+        form  = elt(
+            "form", null, 
+            "Open URL: ", input, 
+            elt("button", {type: "submit"}, "load")
+        );
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        loadImageURL(cx, input.value);
+    });
+
+    return form;
+};
