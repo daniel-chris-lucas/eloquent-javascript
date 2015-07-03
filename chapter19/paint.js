@@ -121,3 +121,39 @@ function trackDrag (onMove, onEnd) {
     addEventListener("mousemove", onMove);
     addEventListener("mouseup", end);
 };
+
+/**
+ * Line tool.
+ * 
+ * @param {Event} event  The mouse event.
+ * @param {Object} cx    The context to draw on.
+ * @param {Function} onEnd Callback to run when finished.
+ */
+tools.Line = function (event, cx, onEnd) {
+    cx.lineCap = "round";
+
+    var pos = relativePos(event, cx.canvas);
+
+    trackDrag(function (event) {
+        cx.beginPath();
+        cx.moveTo(pos.x, pos.y);
+        pos = relativePos(event, cx.canvas);
+        cx.lineTo(pos.x, pos.y);
+        cx.stroke();
+    }, onEnd);
+};
+
+/**
+ * Earse tool.
+ * 
+ * @param {Event} event The mouse event.
+ * @param {Object} cx    The context to draw on.
+ */
+tools.Erase = function (event, cx) {
+    // Change the way drawing affects touched pixels. Remove them.
+    cx.globalCompositeOperation = "destination-out";
+    tools.Line(event, cx, function () {
+        // Set the drawing type to draw over the top of existing pixels.
+        cx.globalCompositeOperation = "source-over";
+    });
+};
