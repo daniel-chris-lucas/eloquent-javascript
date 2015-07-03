@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conway's game of life</title>
+</head>
+<body>
+    <h1>Conway's game of life</h1>
+
+    <p>
+        Conway’s Game of Life is a simple simulation that creates artificial “life” on <br>
+        a grid, each cell of which is either live or not. Each generation (turn), the <br>
+        following rules are applied:
+    </p>
+    <p>
+        <ul>
+            <li>
+                Any live cell with fewer than two or more than three live neighbors <br>
+                dies.
+            </li>
+            <li>
+                Any live cell with two or three live neighbors lives on to the next <br>
+                generation.
+            </li>
+            <li>
+                Any dead cell with exactly three live neighbors becomes a live cell.
+            </li>
+        </ul>
+    </p>
+    <p>
+        A neighbor is defined as any adjacent cell, including diagonally adjacent ones.
+    </p>
+    <p>
+        Note that these rules are applied to the whole grid at once, not one square <br>
+        at a time. That means the counting of neighbors is based on the situation at <br>
+        the start of the generation, and changes happening to neighbor cells during <br>
+        this generation should not influence the new state of a given cell.
+    </p>
+    <p>
+        Implement this game using whichever data structure you find appropri- ate. <br>
+        Use Math.random to populate the grid with a random pattern initially. Display <br>
+        it as a grid of checkbox fields, with a button next to it to ad- vance to the <br>
+        next generation. When the user checks or unchecks the checkboxes, their changes <br>
+        should be included when computing the next generation.
+    </p>
+    <hr>
+    <p>This exercise is logged into the developer tools console using console.log()</p>
+
+    <script>
+        
+    </script>
+</body>
+</html>

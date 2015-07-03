@@ -87,3 +87,9 @@ This repository is in no way related with the work of the book's author.
 
 1. Content negotiation
 2. Waiting for multiple promises
+
+### Chapter 18 : Forms and Form Fields
+
+1. JavaScript workbench
+2. Autocompletion
+3. Conway's game of life
