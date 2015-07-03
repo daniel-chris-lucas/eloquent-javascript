@@ -32,3 +32,53 @@ function elt (name, attributes) {
 
     return node;
 }
+
+// Holder object for functions to initialize the controls.
+var controls = Object.create(null);
+
+/**
+ * Insert a div into the wrapper containing the canvas and the toolbar.
+ * 
+ * @param  {Object} parent The parent DOM element to insert the editor inside.
+ */
+function createPaint (parent) {
+    var canvas  = elt("canvas", {width: 500, height: 300}),
+        cx      = canvas.getContext("2d"),
+        toolbar = elt("div", {class: "toolbar"});
+
+    for (var name in controls) {
+        toolbar.appendChild(controls[name](cx));
+    }
+
+    var panel = elt("div", {class: "picturepanel"}, canvas);
+    parent.appendChild(elt("div", null, panel, toolbar));
+}
+
+// Holder object for tool items.
+var tools = Object.create(null);
+
+/**
+ * Create the tool select.
+ *
+ * Populates the list of tools and deactivates the default event
+ * so that the tools can be used correctly.
+ * 
+ * @param  {Object} cx The 2d context.
+ * @return {Object}    The generated list of tools.
+ */
+controls.tool = function (cx) {
+    var select = elt("select");
+
+    for (var name in tools) {
+        select.appendChild(elt("option", null, name));
+    }
+
+    cx.canvas.addEventListener("mousedown", function (event) {
+        if (event.which == 1) {
+            tools[select.value](event, cx);
+            event.preventDefault();
+        }
+    });
+
+    return elt("span", null, "Tool: ", select);
+};
