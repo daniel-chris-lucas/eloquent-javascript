@@ -399,11 +399,25 @@ tools.Rectangle = function (event, cx) {
     });
 };
 
+/**
+ * Get the color of the pixel at the given coordinates.
+ * 
+ * @param  {Object} cx The context to draw on.
+ * @param  {Number} x  The x coordinate value
+ * @param  {Number} y  The y coordinate value
+ * @return {String}    The RGB value of the color.
+ */
 function colorAt (cx, x, y) {
     var pixel = cx.getImageData(x, y, 1, 1).data;
     return "rgb(" + pixel[0] + ", " + pixel[1] + ", " + pixel[2] + ")";
 }
 
+/**
+ * Pick color tool.
+ * 
+ * @param  {Event} event  The mouse event
+ * @param  {Object} cx    The context to draw on.
+ */
 tools["Pick color"] = function (event, cx) {
     var pos = relativePos(event, cx.canvas);
     try {
@@ -419,4 +433,75 @@ tools["Pick color"] = function (event, cx) {
 
     cx.fillStyle = color;
     cx.strokeStyle = color;
+};
+
+/**
+ * Call a given function for all horizontal and vertical neighbors
+ * of a given point.
+ * 
+ * @param  {Object}   point The point x and y coordinates
+ * @param  {Function} fn    The function to call.
+ */
+function forAllNeighbors (point, fn) {
+    fn({x: point.x, y: point.y + 1});
+    fn({x: point.x, y: point.y - 1});
+    fn({x: point.x + 1, y: point.y});
+    fn({x: point.x - 1, y: point.y});
+}
+
+/**
+ * Check if two points are the same color.
+ *
+ * @param  {Object}  data The image data.
+ * @param  {Object}  pos1 The x + y coordinates of the first point.
+ * @param  {Object}  pos2 The x + y coordinates of the second point.
+ * @return {Boolean}      True if both points are the same color.
+ */
+function isSameColor (data, pos1, pos2) {
+    var offset1 = (pos1.x + pos1.y * data.width) * 4,
+        offset2 = (pos2.x + pos2.y * data.width) * 4;
+
+    for (var i = 0; i < 4; i++) {
+        if (data.data[offset1 + i] != data.data[offset2 + i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Flood fill tool.
+ *
+ * @param  {Event} event  The mouse event
+ * @param  {Object} cx    The context to draw on
+ */
+tools["Flood fill"] = function (event, cx) {
+    var startPos = relativePos(event, cx.canvas),
+        data     = cx.getImageData(0, 0, cx.canvas.width, cx.canvas.height);
+
+    // Array with one place for each pixel in the image.
+    var alreadyFilled = new Array(data.width * data.height);
+
+    var workList = [startPos];
+    while (workList.length) {
+        var pos    = workList.pop(),
+            offset = pos.x + data.width * pos.y;
+
+        if (alreadyFilled[offset]) {
+            continue;
+        }
+
+        cx.fillRect(pos.x, pos.y, 1, 1);
+        alreadyFilled[offset] = true;
+
+        forAllNeighbors(pos, function (neighbor) {
+            if (neighbor.x >= 0 && neighbor.x < data.width &&
+                neighbor.y >= 0 && neighbor.y < data.height &&
+                isSameColor(data, startPos, neighbor)
+            ) {
+                workList.push(neighbor);
+            }
+        });
+    }
 };
