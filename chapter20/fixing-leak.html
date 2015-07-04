@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fixing a leak</title>
+</head>
+<body>
+    <h1>Fixing a leak</h1>
+
+    <p>
+        For easy remote access to some files, I might get into the habit of <br>
+        having the file server defined in this chapter running on my machine, in <br>
+        the /home/marijn/public directory. Then, one day, I find that someone <br>
+        has gained access to all the passwords I stored in my browser.
+    </p>
+
+    <p>
+        What happened?<br>
+        If it isn’t clear to you yet, think back to the urlToPath function, <br>
+        defined like this:
+    </p>
+
+    <pre>
+        function urlToPath ( url ) {
+            var path = require (" url ") . parse ( url ). pathname ;
+            return "." + decodeURIComponent ( path );
+        }
+    </pre>
+
+    <p>
+        Now consider the fact that paths passed to the "fs" functions can be <br>
+        relative—they may contain "../" to go up a directory. What happens when <br>
+        a client sends requests to URLs like the ones shown here?
+    </p>
+
+    <pre>
+        http :// myhostname :8000/../. config / config / google - chrome / Default / Web %20 Data
+        http :// myhostname :8000/../. ssh / id_dsa
+        http :// myhostname :8000/../../../ etc / passwd
+    </pre>
+
+    <p>
+        Change urlToPath to fix this problem. Take into account the fact that <br>
+        Node on Windows allows both forward slashes and backslashes to separate <br>
+        directories.<br>
+        Also, meditate on the fact that as soon as you expose some half-baked system <br>
+        on the Internet, the bugs in that system might be used to do bad things <br>
+        to your machine.
+    </p>
+
+    <script>
+        
+    </script>
+</body>
+</html>

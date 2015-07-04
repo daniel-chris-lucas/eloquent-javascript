@@ -97,3 +97,10 @@ This repository is in no way related with the work of the book's author.
 ### Chapter 19 : A Paint Program
 
 1. A paint program
+
+### Chapter 20 : Node.js
+
+1. Content negotiation, again
+2. Fixing a leak
+3. Creating directories
+4. A public space on the web
