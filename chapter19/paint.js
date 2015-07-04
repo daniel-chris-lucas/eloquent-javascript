@@ -338,6 +338,12 @@ tools.Spray = function (event, cx) {
     });
 };
 
+/**
+ * Function for generating random points withing a defined radius.
+ * 
+ * @param  {Number} radius The radius points should be drawn in.
+ * @return {Object}        Object containing x and y coordinates of the points.
+ */
 function randomPointInRadius (radius) {
     for (;;) {
         var x = Math.random() * 2 - 1,
@@ -348,3 +354,47 @@ function randomPointInRadius (radius) {
         }
     }
 }
+
+/**
+ * Create rectangle using 2 points (oposite corners)
+ * @param  {Object} a Coordinates of the first corner
+ * @param  {Object} b Coordinates of the second corner
+ * @return {Object}   Information of the rectangle (left, top, width, height)
+ */
+function rectangleFrom (a, b) {
+    return {
+        left   : Math.min(a.x, b.x),
+        top    : Math.min(a.y, b.y),
+        width  : Math.abs(a.x - b.x),
+        height : Math.abs(a.y - b.y)
+    };
+}
+
+/**
+ * Rectangle tool.
+ * 
+ * @param {Event} event  The mouse event
+ * @param {Object} cx    The context to draw on
+ */
+tools.Rectangle = function (event, cx) {
+    var relativeStart = relativePos(event, cx.canvas),
+        pageStart     = {x: event.pageX, y: event.pageY},
+        trackingNode  = document.createElement("div");
+
+    trackingNode.style.position = "absolute";
+    trackingNode.style.background = cx.fillStyle;
+    document.body.appendChild(trackingNode);
+
+    trackDrag(function (event) {
+        var rect = rectangleFrom(pageStart, {x: event.pageX, y: event.pageY});
+
+        trackingNode.style.left   = rect.left + "px";
+        trackingNode.style.top    = rect.top + "px";
+        trackingNode.style.width  = rect.width + "px";
+        trackingNode.style.height = rect.height + "px";
+    }, function (event) {
+        var rect = rectangleFrom(relativeStart, relativePos(event, cx.canvas));
+        cx.fillRect(rect.left, rect.top, rect.width, rect.height);
+        document.body.removeChild(trackingNode);
+    });
+};
