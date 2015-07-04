@@ -69,7 +69,17 @@ function displayTalks (talks) {
         } else {
             var node = drawTalk(talk);
             if (shown) {
+                var textField = shown.querySelector("input"),
+                    hasFocus  = document.activeElement == textField,
+                    value     = textField.value;
+
                 talkDiv.replaceChild(node, shown);
+                
+                var newTextField = node.querySelector("input");
+                newTextField.value = value;
+                if (hasFocus) {
+                    newTextField.focus();
+                }
             } else {
                 talkDiv.appendChild(node);
             }
