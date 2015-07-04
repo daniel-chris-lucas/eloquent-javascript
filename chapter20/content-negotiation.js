@@ -2,13 +2,13 @@
  * Content negotiation, again
  *
  * 
- * In Chapter 17, the first exercise was to make several requests to <br>
- * eloquent-javascript.net/author, asking for different types of content <br>
+ * In Chapter 17, the first exercise was to make several requests to
+ * eloquent-javascript.net/author, asking for different types of content
  * by passing different Accept headers.
  *
- * Do this again, using Node’s http.request function. Ask for at least the <br>
- * media types text/plain, text/html, and application/json. Remember that <br>
- * headers to a request can be given as an object, in the headers property <br>
+ * Do this again, using Node’s http.request function. Ask for at least the
+ * media types text/plain, text/html, and application/json. Remember that
+ * headers to a request can be given as an object, in the headers property
  * of http.request’s first argument.
  *
  * Write out the content of the responses to each request.
