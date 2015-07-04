@@ -298,6 +298,12 @@ controls.openURL = function (cx) {
     return form;
 };
 
+/**
+ * Text tool.
+ *
+ * @param {Event} event The mouse event
+ * @param {Object} cx   The context to draw on.
+ */
 tools.Text = function (event, cx) {
     var text = prompt("Text:", "");
     if (text) {
@@ -306,3 +312,39 @@ tools.Text = function (event, cx) {
         cx.fillText(text, pos.x, pos.y);
     }
 };
+
+/**
+ * Spray tool.
+ * @param {Event} event The mouse event
+ * @param {Object} cx   The context to draw on.
+ */
+tools.Spray = function (event, cx) {
+    var radius      = cx.lineWidth / 2,
+        area        = radius * radius * Math.PI,
+        dotsPerTick = Math.ceil(area/ 30),
+        currentPos  = relativePos(event, cx.canvas);
+
+    var spray = setInterval(function () {
+        for (var i = 0; i  < dotsPerTick; i++) {
+            var offset = randomPointInRadius(radius);
+            cx.fillRect(currentPos.x + offset.x, currentPos.y + offset.y, 1, 1);
+        }
+    }, 25);
+
+    trackDrag(function (event) {
+        currentPos = relativePos(event, cx.canvas);
+    }, function () {
+        clearInterval(spray);
+    });
+};
+
+function randomPointInRadius (radius) {
+    for (;;) {
+        var x = Math.random() * 2 - 1,
+            y = Math.random() * 2 - 1;
+
+        if (x * x + y * y <= 1) {
+            return {x: x * radius, y: y * radius};
+        }
+    }
+}
