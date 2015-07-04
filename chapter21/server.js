@@ -1,4 +1,5 @@
 var http     = require("http"),
+    fs       = require("fs"),
     Router   = require("./router"),
     ecstatic = require("ecstatic");
 
@@ -42,7 +43,28 @@ function respondJSON(response, status, data) {
 }
 
 // Keeps track of the talks
-var talks = Object.create(null);
+var talks = loadTalks();
+
+/**
+ * Load the talks from the stored data on the server.
+ * @return {Object} Loaded list of talks from the storage file.
+ */
+function loadTalks () {
+    var result = Object.create(null),
+        json;
+
+    try {
+        json = JSON.parse(fs.readFileSync("./talks.json", "utf8"));
+    } catch (e) {
+        json = {};
+    }
+
+    for (var title in json) {
+        result[title] = json[title];
+    }
+
+    return result;
+}
 
 /**
  * Retrieve a talk from the server.
@@ -219,6 +241,8 @@ function registerChange (title) {
         sendTalks(getChangedTalks(waiter.since), waiter.response);
     });
     waiting = [];
+
+    fs.writeFile("./talks.json", JSON.stringify(talks));
 }
 
 /**
