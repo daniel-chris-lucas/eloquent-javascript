@@ -1,0 +1,7 @@
+{
+  "name": "skillsharing",
+  "version":"0.0.1",
+  "main": "server.js",
+  "description": "Skill-sharing website module",
+  "dependencies": {"ecstatic": ">=0.5.0"}
+}
